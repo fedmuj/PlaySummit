@@ -44,7 +44,12 @@ export const Default = (props: ImageProps): JSX.Element => {
   if (props.fields) {
     const Image = () => <JssImage field={props.fields.Image} />;
     const id = props.params.RenderingIdentifier;
-
+    console.log(`test ${props?.fields?.Image?.value?.src}`);
+    const parsedUrl = new URL(props?.fields?.Image?.value?.src);
+    parsedUrl.searchParams.set('t', 'profile');
+    const newUrlProfile = parsedUrl.toString();
+    parsedUrl.searchParams.set('t', 'medium');
+    const newUrlMedium = parsedUrl.toString();
     return (
       <div className={`component image ${props.params.styles}`} id={id ? id : undefined}>
         <div className="component-content">
@@ -52,7 +57,19 @@ export const Default = (props: ImageProps): JSX.Element => {
             <Image />
           ) : (
             <JssLink field={props.fields.TargetUrl}>
-              <Image />
+              <picture>
+                <source
+                  srcSet={`${newUrlProfile}`}
+                  media="(max-width: 40em)"
+                  title="MSC Bellissima Public Area Galleria Meraviglia 02"
+                />
+                <source
+                  srcSet={newUrlMedium}
+                  media="(max-width: 60em)"
+                  title="MSC Bellissima Public Area Galleria Meraviglia 02"
+                />
+                <Image />
+              </picture>
             </JssLink>
           )}
           <Text

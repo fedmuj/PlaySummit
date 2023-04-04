@@ -6,7 +6,9 @@ import {
   ImageField,
   LinkField,
   RichTextField,
+  useSitecoreContext,
 } from '@sitecore-jss/sitecore-jss-nextjs';
+import Image from 'next/image';
 
 interface Fields {
   PromoIcon: ImageField;
@@ -33,11 +35,30 @@ const PromoDefaultComponent = (props: PromoProps): JSX.Element => (
 export const Default = (props: PromoProps): JSX.Element => {
   const id = props.params.RenderingIdentifier;
   if (props.fields) {
+    console.log(`test ${props?.fields?.PromoIcon?.value?.src}`);
+    const parsedUrl = new URL(props?.fields?.PromoIcon?.value?.src);
+    parsedUrl.searchParams.set('t', 'profile');
+    const newUrlProfile = parsedUrl.toString();
+    parsedUrl.searchParams.set('t', 'medium');
+    const newUrlMedium = parsedUrl.toString();
     return (
       <div className={`component promo ${props.params.styles}`} id={id ? id : undefined}>
         <div className="component-content">
           <div className="field-promoicon">
-            <JssImage field={props.fields.PromoIcon} />
+            <picture>
+              <source
+                srcSet={`${newUrlProfile}`}
+                media="(max-width: 640px)"
+                title="MSC Bellissima Public Area Galleria Meraviglia 02"
+              />
+              <source
+                srcSet={newUrlMedium}
+                media="(max-width: 1024px)"
+                title="MSC Bellissima Public Area Galleria Meraviglia 02"
+              />
+
+              <JssImage field={props.fields.PromoIcon} />
+            </picture>
           </div>
           <div className="promo-text">
             {/* DEMO TEAM CUSTOMIZATION - Add fields */}
