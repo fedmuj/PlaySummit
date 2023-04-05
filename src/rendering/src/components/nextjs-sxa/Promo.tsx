@@ -8,7 +8,6 @@ import {
   RichTextField,
 } from '@sitecore-jss/sitecore-jss-nextjs';
 
-
 interface Fields {
   PromoIcon: ImageField;
   PromoIcon2: ImageField; // DEMO TEAM CUSTOMIZATION - Additional field
