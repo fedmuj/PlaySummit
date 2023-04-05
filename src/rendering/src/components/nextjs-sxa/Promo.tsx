@@ -32,12 +32,19 @@ const PromoDefaultComponent = (props: PromoProps): JSX.Element => (
 
 export const Default = (props: PromoProps): JSX.Element => {
   const id = props.params.RenderingIdentifier;
+  let newUrlProfile, newUrlMedium;
   if (props.fields) {
-    const parsedUrl = new URL(props?.fields?.PromoIcon?.value?.src);
-    parsedUrl.searchParams.set('t', 'profile');
-    const newUrlProfile = parsedUrl.toString();
-    parsedUrl.searchParams.set('t', 'medium');
-    const newUrlMedium = parsedUrl.toString();
+    if (
+      props.fields.PromoIcon &&
+      props.fields.PromoIcon.value &&
+      props.fields.PromoIcon.value.src
+    ) {
+      const parsedUrl = new URL(props?.fields?.PromoIcon?.value?.src);
+      parsedUrl.searchParams.set('t', 'profile');
+      newUrlProfile = parsedUrl.toString();
+      parsedUrl.searchParams.set('t', 'medium');
+      newUrlMedium = parsedUrl.toString();
+    }
     return (
       <div className={`component promo ${props.params.styles}`} id={id ? id : undefined}>
         <div className="component-content">
