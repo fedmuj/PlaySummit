@@ -40,11 +40,25 @@ export const Banner = (props: ImageProps): JSX.Element => {
 
 export const Default = (props: ImageProps): JSX.Element => {
   const { sitecoreContext } = useSitecoreContext();
-
+  let newUrlProfile = '',
+    newUrlMedium = '';
   if (props.fields) {
     const Image = () => <JssImage field={props.fields.Image} />;
     const id = props.params.RenderingIdentifier;
-
+    Object.keys(props.fields.Image.value).forEach((attribute) => {
+      console.log(attribute + ': ' + props.fields.Image.value[attribute]);
+    });
+    if (
+      props.fields.Image &&
+      props.fields.Image.value &&
+      props.fields.Image.value['stylelabs-content-type']
+    ) {
+      const parsedUrl = new URL(props?.fields?.Image?.value?.src);
+      parsedUrl.searchParams.set('t', 'profile');
+      newUrlProfile = parsedUrl.toString();
+      parsedUrl.searchParams.set('t', 'medium');
+      newUrlMedium = parsedUrl.toString();
+    }
     return (
       <div className={`component image ${props.params.styles}`} id={id ? id : undefined}>
         <div className="component-content">
@@ -52,7 +66,19 @@ export const Default = (props: ImageProps): JSX.Element => {
             <Image />
           ) : (
             <JssLink field={props.fields.TargetUrl}>
-              <Image />
+              <picture>
+                <source
+                  srcSet={`${newUrlProfile}`}
+                  media="(max-width: 40em)"
+                  title="MSC Bellissima Public Area Galleria Meraviglia 02"
+                />
+                <source
+                  srcSet={newUrlMedium}
+                  media="(max-width: 60em)"
+                  title="MSC Bellissima Public Area Galleria Meraviglia 02"
+                />
+                <Image />
+              </picture>
             </JssLink>
           )}
           <Text
