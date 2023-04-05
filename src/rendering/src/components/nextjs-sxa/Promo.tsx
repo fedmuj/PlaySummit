@@ -37,7 +37,8 @@ export const Default = (props: PromoProps): JSX.Element => {
     if (
       props.fields.PromoIcon &&
       props.fields.PromoIcon.value &&
-      props.fields.PromoIcon.value.src
+      props.fields.PromoIcon.value.src &&
+      props.fields.PromoIcon.value['stylelabs-content-type']
     ) {
       const parsedUrl = new URL(props?.fields?.PromoIcon?.value?.src);
       parsedUrl.searchParams.set('t', 'profile');
