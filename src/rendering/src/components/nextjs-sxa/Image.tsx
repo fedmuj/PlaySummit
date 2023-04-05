@@ -44,7 +44,6 @@ export const Default = (props: ImageProps): JSX.Element => {
   if (props.fields) {
     const Image = () => <JssImage field={props.fields.Image} />;
     const id = props.params.RenderingIdentifier;
-    console.log(`test ${props?.fields?.Image?.value?.src}`);
     const parsedUrl = new URL(props?.fields?.Image?.value?.src);
     parsedUrl.searchParams.set('t', 'profile');
     const newUrlProfile = parsedUrl.toString();

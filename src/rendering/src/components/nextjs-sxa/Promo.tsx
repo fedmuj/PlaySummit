@@ -35,7 +35,6 @@ const PromoDefaultComponent = (props: PromoProps): JSX.Element => (
 export const Default = (props: PromoProps): JSX.Element => {
   const id = props.params.RenderingIdentifier;
   if (props.fields) {
-    console.log(`test ${props?.fields?.PromoIcon?.value?.src}`);
     const parsedUrl = new URL(props?.fields?.PromoIcon?.value?.src);
     parsedUrl.searchParams.set('t', 'profile');
     const newUrlProfile = parsedUrl.toString();
