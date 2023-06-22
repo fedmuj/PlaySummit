@@ -88,10 +88,10 @@ export const getStaticProps: GetStaticProps = async (context: any) => {
   console.log('ContextLog 1' + JSON.stringify(context));
   if (context.params && context.params.path) {
     context.params.requestPath = context.params.path;
-    context.params.path = [`/vuelos-baratos/${context.params.path}`];
+    context.params.path = [`/cheap-flights/${context.params.path}`];
   } else {
     context.params = {};
-    context.params.path = [`/vuelos-baratos/`];
+    context.params.path = [`/cheap-flights/`];
   }
   console.log('ContextLog 2' + JSON.stringify(context));
   const props = await sitecorePagePropsFactory.create(context);
