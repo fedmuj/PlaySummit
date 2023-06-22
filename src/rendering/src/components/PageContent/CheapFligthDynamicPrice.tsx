@@ -10,7 +10,6 @@ interface CheapFlight {
 }
 
 type FlightsProps = {
-  rendering: any;
   params: { [key: string]: string };
   flights: CheapFlight[];
   headTitle: string;
@@ -27,7 +26,10 @@ const CheapFlightsDefaultComponent = (props: FlightsProps): JSX.Element => (
 export const Default = (props: FlightsProps): JSX.Element => {
   if (props.flights) {
     return (
-      <div className={`component cheap-flights ${props.params.styles}`} id={props.params.RenderingIdentifier ?? undefined}>
+      <div
+        className={`component cheap-flights ${props.params.styles}`}
+        id={props.params.RenderingIdentifier ?? undefined}
+      >
         <Head>
           <title>{props.headTitle}</title>
         </Head>
@@ -56,7 +58,7 @@ export const Default = (props: FlightsProps): JSX.Element => {
   return <CheapFlightsDefaultComponent {...props} />;
 };
 
-export const getStaticProps: GetStaticComponentProps = async (rendering, layoutData, context) => {
+export const getStaticProps: GetStaticComponentProps = async (context) => {
   const destination = context.params?.requestPath?.[0];
   const flightQuery = `
     query {
@@ -81,7 +83,8 @@ export const getStaticProps: GetStaticComponentProps = async (rendering, layoutD
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'X-GQL-Token': 'Y3hMS2U2Rm9nd3RVSWpnREtBRXpEOHdEaVYxL2pUTWVRK2d1Wld1emhnST18aWJlcmlhZDA5NzFlMTE=',
+        'X-GQL-Token':
+          'Y3hMS2U2Rm9nd3RVSWpnREtBRXpEOHdEaVYxL2pUTWVRK2d1Wld1emhnST18aWJlcmlhZDA5NzFlMTE=',
       },
       body: JSON.stringify({ query: flightQuery }),
     });
@@ -116,5 +119,9 @@ export const getStaticProps: GetStaticComponentProps = async (rendering, layoutD
     };
   } catch (error) {
     // Handle fetch or JSON parsing error (e.g., throw an error or return an appropriate value)
+
+    return {
+      headTitle: `Cheap flights to ${destination}`,
+    };
   }
 };
